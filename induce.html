@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Try - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* 動態背景漸層 */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f172a, #1e293b, #334155);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 浮動光球效果 */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: #f43f5e;
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 250px;
+            height: 250px;
+            background: #3b82f6;
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .hero-text h1:hover {
+            transform: scale(1.1) translateY(-5px);
+            filter: drop-shadow(0 10px 20px rgba(244, 63, 94, 0.5));
+            letter-spacing: 0.1em;
+            animation: titleRainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleRainbow {
+            0% { filter: hue-rotate(0deg) drop-shadow(0 10px 30px rgba(244, 63, 94, 0.8)); }
+            50% { filter: hue-rotate(180deg) drop-shadow(0 10px 30px rgba(59, 130, 246, 0.8)); }
+            100% { filter: hue-rotate(360deg) drop-shadow(0 10px 30px rgba(244, 63, 94, 0.8)); }
+        }
+
+        .hero-text p {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: #94a3b8;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            cursor: default;
+        }
+
+        .hero-text p:hover {
+            color: #cbd5e1;
+        }
+
+        /* Hero 段落文字特效 */
+        .hero-glow-text {
+            position: relative;
+            display: inline-block;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        .hero-glow-text:hover {
+            transform: translateY(-8px) scale(1.2) rotate(5deg);
+            animation: rainbowGlow 2s ease-in-out infinite;
+        }
+
+        /* 文字浮光效果 */
+        .glow-text {
+            position: relative;
+            display: inline-block;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        .glow-text:hover {
+            transform: translateY(-8px) scale(1.2) rotate(5deg);
+            animation: rainbowGlow 2s ease-in-out infinite;
+        }
+
+        /* 彩虹呼吸燈動畫 */
+        @keyframes rainbowGlow {
+            0% {
+                color: #f43f5e;
+                text-shadow: 0 0 20px #f43f5e, 0 0 40px #f43f5e, 0 0 60px #f43f5e;
+                filter: brightness(1.5);
+            }
+            14% {
+                color: #fb923c;
+                text-shadow: 0 0 20px #fb923c, 0 0 40px #fb923c, 0 0 60px #fb923c;
+                filter: brightness(1.5);
+            }
+            28% {
+                color: #fbbf24;
+                text-shadow: 0 0 20px #fbbf24, 0 0 40px #fbbf24, 0 0 60px #fbbf24;
+                filter: brightness(1.5);
+            }
+            42% {
+                color: #34d399;
+                text-shadow: 0 0 20px #34d399, 0 0 40px #34d399, 0 0 60px #34d399;
+                filter: brightness(1.5);
+            }
+            57% {
+                color: #60a5fa;
+                text-shadow: 0 0 20px #60a5fa, 0 0 40px #60a5fa, 0 0 60px #60a5fa;
+                filter: brightness(1.5);
+            }
+            71% {
+                color: #a78bfa;
+                text-shadow: 0 0 20px #a78bfa, 0 0 40px #a78bfa, 0 0 60px #a78bfa;
+                filter: brightness(1.5);
+            }
+            85% {
+                color: #ec4899;
+                text-shadow: 0 0 20px #ec4899, 0 0 40px #ec4899, 0 0 60px #ec4899;
+                filter: brightness(1.5);
+            }
+            100% {
+                color: #f43f5e;
+                text-shadow: 0 0 20px #f43f5e, 0 0 40px #f43f5e, 0 0 60px #f43f5e;
+                filter: brightness(1.5);
+            }
+        }
+
+        /* 輕微呼吸效果 */
+        @keyframes breathe {
+            0%, 100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.02);
+            }
+        }
+
+        /* 為每個字添加延遲效果 */
+        .glow-text:nth-child(1) { animation-delay: 0s; }
+        .glow-text:nth-child(2) { animation-delay: 0.05s; }
+        .glow-text:nth-child(3) { animation-delay: 0.1s; }
+        .glow-text:nth-child(4) { animation-delay: 0.15s; }
+        .glow-text:nth-child(5) { animation-delay: 0.2s; }
+        .glow-text:nth-child(6) { animation-delay: 0.25s; }
+        .glow-text:nth-child(7) { animation-delay: 0.3s; }
+        .glow-text:nth-child(8) { animation-delay: 0.35s; }
+        .glow-text:nth-child(9) { animation-delay: 0.4s; }
+        .glow-text:nth-child(10) { animation-delay: 0.45s; }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .avatar {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            padding: 5px;
+            box-shadow: 0 20px 60px rgba(244, 63, 94, 0.4);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover .avatar-inner {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(244, 63, 94, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 30px 80px rgba(244, 63, 94, 0.6); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title:hover {
+            transform: scale(1.05);
+            letter-spacing: 0.05em;
+            filter: drop-shadow(0 5px 15px rgba(244, 63, 94, 0.4));
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(244, 63, 94, 0.2);
+            border-color: rgba(244, 63, 94, 0.3);
+        }
+
+        .glass-card p {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover p {
+            color: #e2e8f0;
+            transform: translateX(5px);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+        }
+
+        .portfolio-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 60px rgba(244, 63, 94, 0.3);
+            border-color: rgba(244, 63, 94, 0.5);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            transition: all 0.4s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image {
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 2rem;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #f43f5e;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover .portfolio-info h3 {
+            color: #ec4899;
+            transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+        }
+
+        .portfolio-info p {
+            color: #94a3b8;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-info p {
+            color: #cbd5e1;
+        }
+
+        /* Portfolio 文字特效 */
+        .portfolio-glow-text {
+            position: relative;
+            display: inline-block;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        .portfolio-glow-text:hover {
+            transform: translateY(-8px) scale(1.2) rotate(5deg);
+            animation: rainbowGlow 2s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .avatar {
+                width: 200px;
+                height: 200px;
+            }
+
+            .avatar-inner {
+                font-size: 4rem;
+            }
+
+            .glass-card {
+                padding: 2rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .orb {
+                display: none;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 2rem;
+            color: #f43f5e;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 動態背景 -->
+    <div class="animated-bg">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>TRY</h1>
+                <p>一位熱愛技術與創新的資訊科學生，透過機器人競賽與程式開發，持續探索科技的無限可能。</p>
+            </div>
+            <div class="hero-image">
+                <div class="avatar">
+                    <div class="avatar-inner">🤖</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="about-content">
+            <h2 class="section-title">關於我</h2>
+            <div class="glass-card">
+                <p>
+                    我目前就讀大甲高工資訊科，曾代表學校參加全國技能技藝競賽分區賽，挑戰自主移動機器人與機械手臂項目。比賽經驗讓我熟練 RoboGuide 操作與 3D 建模技能，並培養了專案實作能力。課堂上我也持續學習程式語言,如 C、C# 和 PHP，結合實務與理論，打造完整的技術能力。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio">
+        <div class="portfolio-content">
+            <h2 class="section-title">作品集</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">🤖</div>
+                    <div class="portfolio-info">
+                        <h3>自主移動機器人</h3>
+                        <p>全國技能技藝競賽參賽作品，展現自主導航與路徑規劃能力。</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">🦾</div>
+                    <div class="portfolio-info">
+                        <h3>機械手臂控制系統</h3>
+                        <p>使用 RoboGuide 進行精密控制與 3D 模擬開發。</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">💻</div>
+                    <div class="portfolio-info">
+                        <h3>程式專案開發</h3>
+                        <p>運用 C、C# 與 PHP 打造多元應用程式與網頁系統。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 平滑滾動效果
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('.about').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // 滾動動畫觸發
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 為作品集項目添加觀察
+        document.querySelectorAll('.portfolio-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(50px)';
+            item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // 滑鼠跟隨光標效果
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animate() {
+            currentX += (mouseX - currentX) * 0.05;
+            currentY += (mouseY - currentY) * 0.05;
+
+            const orb1 = document.querySelector('.orb1');
+            const orb2 = document.querySelector('.orb2');
+
+            if (orb1) {
+                orb1.style.transform = `translate(${currentX * 0.02}px, ${currentY * 0.02}px)`;
+            }
+            if (orb2) {
+                orb2.style.transform = `translate(${-currentX * 0.01}px, ${-currentY * 0.01}px)`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 為段落文字添加單字互動效果
+        function addGlowEffect(selector, className) {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                const text = element.textContent;
+                const chars = text.split('');
+                element.innerHTML = chars.map((char, index) => {
+                    if (char === ' ') return ' ';
+                    const delay = (index * 0.05) % 1;
+                    return `<span class="${className}" style="animation-delay: ${delay}s">${char}</span>`;
+                }).join('');
+
+                // 滑鼠移過時觸發波浪效果
+                const glowTexts = element.querySelectorAll(`.${className}`);
+                glowTexts.forEach((textSpan, index) => {
+                    textSpan.addEventListener('mouseenter', () => {
+                        for (let i = Math.max(0, index - 3); i <= Math.min(glowTexts.length - 1, index + 3); i++) {
+                            const distance = Math.abs(i - index);
+                            const delayMs = distance * 50;
+                            setTimeout(() => {
+                                glowTexts[i].style.animation = 'rainbowGlow 2s ease-in-out, breathe 3s ease-in-out infinite';
+                                setTimeout(() => {
+                                    glowTexts[i].style.animation = 'breathe 3s ease-in-out infinite';
+                                }, 2000);
+                            }, delayMs);
+                        }
+                    });
+                });
+            });
+        }
+
+        // 應用到所有文字區域
+        addGlowEffect('.hero-text p', 'hero-glow-text');
+        addGlowEffect('.glass-card p', 'glow-text');
+        addGlowEffect('.portfolio-info h3', 'portfolio-glow-text');
+        addGlowEffect('.portfolio-info p', 'portfolio-glow-text');
+    </script>
+</body>
+</html>
